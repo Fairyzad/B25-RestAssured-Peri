@@ -1,6 +1,6 @@
 package day2;
 
-public class SpartanGetRequest {
+public class SpartanNegativeGetRequest {
 
     String url = "http://44.201.121.105:8000";
 
