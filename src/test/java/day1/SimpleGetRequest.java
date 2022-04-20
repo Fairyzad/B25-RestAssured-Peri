@@ -19,16 +19,20 @@ public class SimpleGetRequest {
         For example, if your HTTP server returns the following JSON at “http://localhost:8080/lotto/{id}”:
         You can easily use REST Assured to validate interesting things from the response:
          */
-        Response response = RestAssured.get(url);
+
+       Response response = RestAssured.get(url);
 
         //print response status code
         System.out.println("response.statusCode() = " + response.statusCode());
 
+
         //print response body
         response.prettyPrint();
 
+
         //verify status code is 200
         Assertions.assertEquals(200,response.statusCode());
+
 
     }
 }
