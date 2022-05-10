@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 
+import io.restassured.http.ContentType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,15 +19,22 @@ public class CvsFileSourceParameterizedTest {
      */
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/zipcode.csv",numLinesToSkip = 1) //skip the 1st line-header
+    @CsvFileSource(resources = "/zipcode.csv",numLinesToSkip = 1)
     public void zipCodeTestWithFile(String stateArg,String cityArg,int zipCountArg){
-
         System.out.println("state = " + stateArg);
         System.out.println("city = " + cityArg);
         System.out.println("zipCount = " + zipCountArg);
 
+        given()
+                .baseUri("https://api.zippopotam.us")
+                .accept(ContentType.JSON)
+                .pathParam("state",stateArg)
+                .and()
+                .pathParam("city",cityArg)
+                .when().get("/us/{state}/{city}")
+                .then()
+                .statusCode(200)
+                .body("places",hasSize(zipCountArg));
+
     }
-
-
-
 }
