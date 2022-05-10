@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /*
- * This is a utility for reading from writing to excel files.
+ * This is a utility for reading from writing to Excel files.
  * it works with xls and xlsx files.
+ *how to work your Excel files?
+ * I have my util class where I use my apache dependency to read and write from my Excel files.
  */
 
 public class ExcelUtil {
