@@ -17,6 +17,7 @@ public class ExcelUtilPractice {
         ExcelUtil vytrackFile = new ExcelUtil("src/test/resources/Vytracktestdata.xlsx","Q3-short");
 
         List<Map<String,String>> dataList = vytrackFile.getDataList();
+        // use getDataList method to get the information of whole table
 
         for (Map<String, String> rowMap : dataList) {
             System.out.println(rowMap);
