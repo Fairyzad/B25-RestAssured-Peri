@@ -23,6 +23,12 @@ public class OldRestAssuredTest extends SpartanNewBase {
                 .log().all();
 
     }
+    /*
+     in previous version of RestAssured, the given when then style
+        was actually written in given expect when formatted.
+        it will assert all the result and give one answer and does not fail while thing
+        if first one fail unlike new structure.
+     */
 
     @Test
     public void getAllSpartanOldWay(){
