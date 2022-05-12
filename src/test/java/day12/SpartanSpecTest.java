@@ -6,10 +6,12 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.Test;
 
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
+
 
 public class SpartanSpecTest extends SpartanNewBase {
 
@@ -21,22 +23,42 @@ public class SpartanSpecTest extends SpartanNewBase {
 
     @Test
     public void test1(){
-        given().accept(ContentType.JSON)
-                .and().auth().basic("admin","admin")
-                .log().all()
-                .when().get("/spartans")
-                .then().statusCode(200)
-                .and().contentType(ContentType.JSON);
+
+//        RequestSpecification reqSpec = given()
+//                                         .accept(ContentType.JSON)
+//                                         .and()
+//                                         .auth().basic("admin", "admin")
+//                                          .log().all();
+//
+//        ResponseSpecification responseSpec = expect().statusCode(200)
+//                                                      .and()
+//                                                 .contentType(ContentType.JSON);
+
+
+        given()
+                .spec(reqSpec)
+                .when()
+                .get("/spartans")
+                .then()
+                .spec(responseSpec);
+
+
+
     }
 
     @Test
     public void test2(){
-        given().accept(ContentType.JSON)
-                .and().auth().basic("admin","admin")
+        given()
+                .spec(userSpec)
+                .and()
                 .pathParam("id",8)
-                .log().all()
-                .when().get("/spartans/{id}")
-                .then().statusCode(200)
-                .and().contentType(ContentType.JSON);
+                .when()
+                .get("/spartans/{id}")
+                .then()
+                .spec(responseSpec)
+                .body("gender",is("Male"));
+
+
     }
+
 }
