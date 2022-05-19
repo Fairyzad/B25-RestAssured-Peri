@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 
 public class SpartanNegativeGetRequest {
-    //beforeall is the same thing with beforeClass in testng
+    //before all is the same thing with beforeClass in testng
     @BeforeAll
     public static void init(){
         RestAssured.baseURI ="http://44.201.121.105:8000";
@@ -52,13 +52,21 @@ public class SpartanNegativeGetRequest {
     */
 
     @Test
+    @DisplayName("Get request with Accept XML individual Spartan")
 
     public void test2(){
-        Response response = RestAssured.given().accept(ContentType.XML).when().get("/api/spartans/10");
 
+    Response response = RestAssured.given()
+            .accept(ContentType.XML)
+            .when().get("api/spartans/10");
 
+    // verify status code must be 406
+        Assertions.assertEquals(406,response.statusCode());
+
+        // verify response Content Type must be application/xml;charset=UTF-8;
+        Assertions.assertEquals("application/xml;charset=UTF-8",response.contentType()
+        );
 
     }
-
 
 }
