@@ -3,15 +3,14 @@ package day3;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import utilities.HRTestBase;
 
-import javax.management.Query;
 import java.util.List;
 
-public class HRApiWithPath {
+public class HRApiWithPath extends HRTestBase {
 
   /*  Query Parameters
              -> It is NOT part of url and passed in key+value format
@@ -66,11 +65,13 @@ public class HRApiWithPath {
 
     Assertions.assertEquals(200,response.statusCode());
 
-    //assert all the job id are
+    //assert all the job id are IT_PROG
     List<String> allJobIDs = response.path("items.job_id");
 
-    //Verify
-
+    //verify each of them is IT_PROG
+    for(String each : allJobIDs){
+      Assertions.assertEquals("IT_PROG",each);
+    }
 
   }
 }
