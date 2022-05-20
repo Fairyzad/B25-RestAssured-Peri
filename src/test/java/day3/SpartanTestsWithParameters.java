@@ -9,6 +9,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utilities.SpartanTestBase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpartanTestsWithParameters extends SpartanTestBase {
 
      /*   Given accept type is Json
@@ -132,7 +135,8 @@ public class SpartanTestsWithParameters extends SpartanTestBase {
 
  @Test
     public void test3(){
-     Response response = RestAssured.given().accept(ContentType.JSON)
+     Response response = RestAssured.given().log().all()// log() method to read request you sent
+             .accept(ContentType.JSON)
              .and().pathParam("id",5)
              .when().get("/api/spartans/{id}");
 
@@ -144,7 +148,28 @@ public class SpartanTestsWithParameters extends SpartanTestBase {
      Assertions.assertTrue(response.body().asString().contains("Blythe"));
 
  }
+@Test
+@DisplayName("Get request to api/spartans/search with Query params (MAP")
+    public void test4(){
+     //create a map and store query params information
+    Map<String,Object> queryMap = new HashMap<>();
+    queryMap.put("gender","Female");
+    queryMap.put("nameContains","e");
 
+    Response response=RestAssured.given().accept(ContentType.JSON).queryParams(queryMap)
+            .when().get("api/spartans/search");
+
+    Assertions.assertEquals(200,response.statusCode());
+
+    Assertions.assertEquals("application/json",response.contentType());
+    // Assertions.assertEquals("application/json",response.header("content-type")); use Header method
+
+    Assertions.assertTrue(response.body().asString().contains("Female"));
+
+    Assertions.assertTrue(response.body().asString().contains("Janette"));
+
+
+}
 
 
 }
